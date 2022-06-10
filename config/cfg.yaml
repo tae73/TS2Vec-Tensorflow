@@ -1,0 +1,52 @@
+data:
+  timesteps: 256
+  features: 64
+  classes: 1
+
+random:
+  random_seed: None
+
+ts2vec:
+  model:
+    depth : 10
+    hidden_size : 128
+    out_size : 320
+    projection_activation : None
+    kernel_size : 3
+    extractor_padding : 'causal'
+    extractor_activation : 'gelu'
+    extractor_dropout_rate : 0
+    extractor_batch_norm : False
+    extractor_layer_norm : False
+    represent_dropout_rate : 0.1
+    mask_mode: 'binomial'
+
+  train:
+    epochs : None
+    iters : None
+    batch_size: 8
+    buffer_size: 100
+    learning_rate : 0.001
+    max_train_length : None
+    optimize_fn : optimizers.Adam
+
+  loss:
+    alpha : 0.5
+    temporal_unit : 0
+
+task:
+  model:
+    type: 'tcn'
+    tune_blocks: 1
+
+  train:
+    epochs: 200
+    learning_rate: 0.005
+    loss_fn: losses.BinaryCrossentropy
+    optimize_fn: optimizers.Adam
+    loss_metric: metrics.BinaryCrossentropy
+    evaluate_metric: metrics.BinaryAccuracy
+    batch_size: 32
+    buffer_size: 100
+
+

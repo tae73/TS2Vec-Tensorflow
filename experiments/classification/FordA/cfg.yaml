@@ -1,0 +1,59 @@
+data:
+  timesteps: 500
+  features: 1
+  classes: 1
+
+random:
+  random_seed: None
+
+ts2vec:
+  model:
+    depth : 10
+    hidden_size : 64
+    out_size : 320
+    projection_activation : None
+    kernel_size : 3
+    extractor_padding : 'causal'
+    extractor_activation : 'gelu'
+    extractor_dropout_rate : 0
+    extractor_batch_norm : False
+    extractor_layer_norm : False
+    represent_dropout_rate : 0.1
+    mask_mode: 'binomial'
+
+  train:
+    epochs : None
+    iters : None
+    batch_size: 8
+    buffer_size: 100
+    learning_rate : 0.001
+    max_train_length : None
+    optimize_fn : optimizers.Adam
+
+
+  loss:
+    alpha : 0.5
+    temporal_unit : 0
+
+mlflow:
+  experiment_name: 'FordA'
+
+task:
+  model:
+    type: 'tcn_freeze'
+    tune_blocks: 1
+    l2_decay: 0.002
+
+  train:
+    epochs: 50
+    learning_rate: 0.001
+    loss_fn: losses.BinaryCrossentropy
+    optimize_fn: optimizers.Adam
+    loss_metric: metrics.BinaryCrossentropy
+    evaluate_metric: metrics.BinaryAccuracy
+    early_stopping: True
+    stop_patience: 5
+    batch_size: 64
+    buffer_size: 100
+
+
